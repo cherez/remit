@@ -10,7 +10,7 @@ require 'cgi'
 
 require 'rubygems'
 
-gem 'relax', '0.0.7'
+gem 'relax', '0.0.7.1'
 require 'relax'
 
 
@@ -108,7 +108,7 @@ module Remit
       @api_endpoint = sandbox ? API_SANDBOX_ENDPOINT : API_ENDPOINT
       super(@api_endpoint)
     end
-    
+
     # generates v1 signatures, for historical purposes.
     def self.signature_v1(path, params, secret_key)
       params = params.reject {|key, val| ['awsSignature', 'action', 'controller', 'id'].include?(key) }.sort_by{ |k,v| k.to_s.downcase }.map{|k,v| "#{CGI::escape(k)}=#{Remit::SignedQuery.escape_value(v)}"}.join('&')
